@@ -31,7 +31,7 @@ def transcribe():
         with sr.AudioFile(audio_wav_path) as source:
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.record(source)
-            text = recognizer.recognize_sphinx(audio)  # Using CMU Sphinx
+            text = recognizer.recognize_google(audio)  # Using CMU Sphinx
 
         return jsonify({"transcription": text})
 
