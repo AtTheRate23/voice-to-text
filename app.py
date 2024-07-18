@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify
 import os
 import speech_recognition as sr
 from pydub import AudioSegment
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 def convert_to_wav(audio_file_path, output_file_path):
     audio = AudioSegment.from_file(audio_file_path)
