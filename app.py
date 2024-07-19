@@ -17,8 +17,12 @@ def transcribe():
     try:
         if 'audio' not in request.files:
             return jsonify({"error": "No audio file provided"}), 400
+        
+        if 'language' not in request.form:
+            return jsonify({"error": "No language specified"}), 400
 
         audio_file = request.files['audio']
+        language = request.form['language']  # 'en-US' for English, 'hi-IN' for Hindi, etc.
         audio_path = 'temp_audio'
         audio_wav_path = 'temp_audio/temp_audio.wav'
 
@@ -34,7 +38,7 @@ def transcribe():
         with sr.AudioFile(audio_wav_path) as source:
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.record(source)
-            text = recognizer.recognize_google(audio)  # Using CMU Sphinx
+            text = recognizer.recognize_google(audio, language=language)  # Using CMU Sphinx
 
         return jsonify({"transcription": text})
 
